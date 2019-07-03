@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <h1>PIXNET ALBUM</h1>
+    <h3>{{ url }}</h3>
     <AlbumComponent
       v-for="profiles in filterPic"
       v-bind:key="profiles.id"
       v-bind="profiles"
-      v-on:click="select($event)"
+      @click.native="select(profiles)"
     ></AlbumComponent>
   </div>
 </template>
@@ -19,7 +20,7 @@ export default {
     AlbumComponent
   },
   data() {
-    return { profile: [] };
+    return { profile: [], url: "" };
   },
   computed: {
     filterPic: function() {
@@ -33,8 +34,10 @@ export default {
   },
 
   methods: {
-    select: function(event) {
-      alert(event.currentTarget);
+    select: function(profiles) {
+      this.url = profiles.link;
+      console.log(this.url);
+      profiles.link = "#";
     }
   }
 };
