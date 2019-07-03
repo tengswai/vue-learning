@@ -1,24 +1,23 @@
 <template>
   <div id="app">
     <h1>PIXNET ALBUM</h1>
-    <PhotoAlbum
+    <AlbumComponent
       v-for="profiles in profile"
-      v-bind:key="profiles.id"
-      v-bind:title="profiles.title"
-      v-bind:link="profiles.link"
-      v-bind:thumb="profiles.thumb"
-      v-on:click="showLink"
-    ></PhotoAlbum>
+      v-if="profiles.type == 'pic'"
+      :key="profiles.id"
+      v-bind="profiles"
+      @click="showLink"
+    ></AlbumComponent>
   </div>
 </template>
 
 <script>
-import PhotoAlbum from "./components/PhotoAlbum";
+import AlbumComponent from "./components/AlbumComponent";
 
 export default {
   name: "App",
   components: {
-    PhotoAlbum
+    AlbumComponent
   },
   data() {
     return { profile: [] };
@@ -29,7 +28,7 @@ export default {
       .then(response => (this.profile = response.data.elements));
   },
   method() {
-    showLink:console.log(this.link);
+    showLink: console.log(this.link);
   }
 };
 </script>
@@ -46,15 +45,6 @@ img {
   width: 200px;
   border-radius: 20px;
   border: 1px black solid;
-}
-
-ul {
-  list-style: none;
-}
-
-li {
-  display: inline;
-  float: left;
 }
 
 span {
