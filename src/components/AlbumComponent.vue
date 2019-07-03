@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <a :href="link">
+  <div @click="$emit('displaylink',link)">
+    <a :data-href="link">
       <img :src="thumb">
     </a>
     <span>{{ title }}</span>
@@ -17,5 +17,6 @@ export default {
 div {
   display: inline;
   float: left;
+  width: 300px;
 }
 </style>

@@ -4,9 +4,11 @@
     <h3>{{ url }}</h3>
     <AlbumComponent
       v-for="profiles in filterPic"
-      v-bind:key="profiles.id"
+      :key="profiles.id"
       v-bind="profiles"
-      @click.native="select(profiles)"
+      @click.native="changeborder(className)"
+      @displaylink="onDisplayLink"
+      :class="className"
     ></AlbumComponent>
   </div>
 </template>
@@ -20,7 +22,7 @@ export default {
     AlbumComponent
   },
   data() {
-    return { profile: [], url: "" };
+    return { profile: [], url: "", className: "red" };
   },
   computed: {
     filterPic: function() {
@@ -34,10 +36,17 @@ export default {
   },
 
   methods: {
-    select: function(profiles) {
-      this.url = profiles.link;
+    onDisplayLink: function(link) {
+      this.url = link;
       console.log(this.url);
-      profiles.link = "#";
+      window.scrollTo(0, 0);
+    },
+    changeborder: function(className) {
+      if (className === "red") {
+        this.className = "blue";
+      } else {
+        this.className = "red";
+      }
     }
   }
 };
@@ -57,6 +66,13 @@ img {
   border: 1px black solid;
 }
 
+.red {
+  border: solid red 1px;
+}
+
+.blue {
+  border: solid blue 1px;
+}
 span {
   display: block;
   text-align: center;
