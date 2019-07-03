@@ -1,11 +1,14 @@
 <template>
   <div id="app">
     <h1>PIXNET ALBUM</h1>
+    <h3>{{ url }}</h3>
     <AlbumComponent
       v-for="profiles in filterPic"
-      v-bind:key="profiles.id"
+      :key="profiles.id"
       v-bind="profiles"
-      v-on:click="select($event)"
+      @click.native="changeborder(className)"
+      @displaylink="onDisplayLink"
+      :class="className"
     ></AlbumComponent>
   </div>
 </template>
@@ -19,7 +22,7 @@ export default {
     AlbumComponent
   },
   data() {
-    return { profile: [] };
+    return { profile: [], url: "", className: "red" };
   },
   computed: {
     filterPic: function() {
@@ -32,8 +35,17 @@ export default {
       .then(response => (this.profile = response.data.elements));
   },
   methods: {
-    select: function(event) {
-      alert(event.currentTarget);
+    onDisplayLink: function(link) {
+      this.url = link;
+      console.log(this.url);
+      window.scrollTo(0, 0);
+    },
+    changeborder: function(className) {
+      if (className === "red") {
+        this.className = "blue";
+      } else {
+        this.className = "red";
+      }
     }
   }
 };
@@ -53,6 +65,13 @@ img {
   border: 1px black solid;
 }
 
+.red {
+  border: solid red 1px;
+}
+
+.blue {
+  border: solid blue 1px;
+}
 span {
   display: block;
   text-align: center;
