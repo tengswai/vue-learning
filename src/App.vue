@@ -31,6 +31,7 @@ export default {
       .get("https://emma.pixnet.cc/album/elements?set_id=34260&user=emmademo")
       .then(response => (this.profile = response.data.elements));
   },
+
   methods: {
     select: function(event) {
       alert(event.currentTarget);
