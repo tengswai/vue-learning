@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <h1>PIXNET ALBUM</h1>
+    <h3>{{ url }}</h3>
     <AlbumComponent
-      v-for="profiles in profile"
-      v-if="profiles.type == 'pic'"
-      :key="profiles.id"
+      v-for="profiles in filterPic"
+      v-bind:key="profiles.id"
       v-bind="profiles"
-      @click="showLink"
+      @click.native="select(profiles)"
     ></AlbumComponent>
   </div>
 </template>
@@ -20,15 +20,25 @@ export default {
     AlbumComponent
   },
   data() {
-    return { profile: [] };
+    return { profile: [], url: "" };
+  },
+  computed: {
+    filterPic: function() {
+      return this.profile.filter(item => item.type === "pic");
+    }
   },
   mounted() {
     this.$axios
       .get("https://emma.pixnet.cc/album/elements?set_id=34260&user=emmademo")
       .then(response => (this.profile = response.data.elements));
   },
-  method() {
-    showLink: console.log(this.link);
+
+  methods: {
+    select: function(profiles) {
+      this.url = profiles.link;
+      console.log(this.url);
+      profiles.link = "#";
+    }
   }
 };
 </script>
